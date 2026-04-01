@@ -1,12 +1,12 @@
-def call(Map config = [:]) {
-    def imageName = config.imageName ?: error("Image name is required")
-    def imageTag = config.imageTag ?: 'latest'
-    def dockerfile = config.dockerfile ?: 'Dockerfile'
-    def context = config.context ?: '.'
+def call(String imageName, String imageTag = 'latest', String hubUser = 'anshthakur31') {
+  
+    def fullImageName = "${hubUser}/${imageName}"
+    def dockerfile = 'Dockerfile'
+    def context = '.'
     
-    echo "Building Docker image: ${imageName}:${imageTag} using ${dockerfile}"
+    echo "Building Docker image: ${fullImageName}:${imageTag}"
     
     sh """
-        docker build -t ${imageName}:${imageTag} -t ${imageName}:latest -f ${dockerfile} ${context}
+        docker build -t ${fullImageName}:${imageTag} -t ${fullImageName}:latest -f ${dockerfile} ${context}
     """
 }
