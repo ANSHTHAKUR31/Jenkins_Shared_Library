@@ -1,13 +1,12 @@
 def call(String imageName, String imageTag = 'latest', String hubUser = 'anshthakur31') {
-    // Ham image name ko hubUser ke saath combine kar rahe hain
     def fullImageName = "${hubUser}/${imageName}"
-    // Aapne Jenkins mein jo credentials ID banayi hai, wo yahan likhein
-    def credentials = 'docker-hub-credentials' 
+    // Yahi ID Jenkins Credentials mein honi chahiye
+    def credentialsId = 'docker-hub-credentials' 
     
     echo "Pushing Docker image: ${fullImageName}:${imageTag}"
     
     withCredentials([usernamePassword(
-        credentialsId: credentials,
+        credentialsId: credentialsId, // Variable use karein
         usernameVariable: 'DOCKER_USERNAME',
         passwordVariable: 'DOCKER_PASSWORD'
     )]) {
